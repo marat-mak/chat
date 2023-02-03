@@ -3,7 +3,7 @@ using namespace std;
 
 int main()
 {
-	User* user[10];
+	User user[10];
 	//int count = 0;
 	short usersNum = 0; //кол-во зарегистрированных пользователей
 	while (true)
@@ -26,7 +26,7 @@ int main()
 			cin >> password;
 			for (int i = 0; i < usersNum; ++i)
 			{
-				if (user[i]->getLogin() == login && user[i]->getPassword() == password)
+				if (user[i].getLogin() == login && user[i].getPassword() == password)
 					cout << "Login correct" << endl;
 				
 			}
@@ -42,7 +42,7 @@ int main()
 			cin >> login;
 			cout << "Enter password: ";
 			cin >> password;
-			user[usersNum] = new User(login, password);	
+			user[usersNum] = User(login, password);	
 			++usersNum;
 			
 			
@@ -55,11 +55,14 @@ int main()
 		default:
 			break;
 		}
-		//for (int i = 0; i <= count; ++i)
-		//	{
-		//		user[i]->show();
+		cout << "============================================\n";
+		for (int i = 0; i <= usersNum; ++i)
+			{
+			
+				user[i].show();
 		//		cout << user[i]->getLogin() << endl;
-		//	}
+			}
+		cout << "============================================\n";
 		//++count;
 	}
 	
