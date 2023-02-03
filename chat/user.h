@@ -10,6 +10,7 @@ private:
 	string _login;
 	string _password;
 public:
+	User() = default;
 	User(string login, string password);
 	~User() = default;
 	void show();
