@@ -21,12 +21,18 @@
     <ClCompile Include="user.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="container.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="login.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="container.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

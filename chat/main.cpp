@@ -3,7 +3,7 @@ using namespace std;
 
 int main()
 {
-	User user[10];
+	User* user = new User[10];
 	//int count = 0;
 	short usersNum = 0; //кол-во зарегистрированных пользователей
 	while (true)
@@ -12,7 +12,6 @@ int main()
 		cout << "Press [1] - login; [2] - registry new user; [3] - exit" << endl;
 		short choice;
 		cin >> choice;
-		//User* user[5];
 		string login;
 		string password;
 		string name;
@@ -50,6 +49,7 @@ int main()
 		
 
 		case 3:
+			delete[] user;
 			exit(0);
 
 		default:
