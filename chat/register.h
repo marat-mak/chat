@@ -6,8 +6,8 @@
 string name;
 string login;
 string password;
-short usersNum = 0;
-int messagesNum = 0;
+short usersNum = 0;      //нам точно нужны
+int messagesNum = 0;					//эти переменные? есть же getSize  =)
 string currentUser;
 
 void readMessage();
@@ -25,6 +25,10 @@ void reg()
 	cin >> login;
 	cout << "Enter password: ";
 	cin >> password;
+	for (int i = 0; i < users.getSize(); i++)
+	{
+		if (users[i].getLogin() == login) throw "login is bussy";   // по хорошему бы вводить логин первым и сразу его проверять 
+	}																//чтоб лишний раз не вводить пароль и имя если логин занят
 	users.addItem(User(name, login, password));
 	++usersNum;
 }

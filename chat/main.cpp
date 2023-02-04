@@ -29,7 +29,11 @@ int main()
 			}
 			break;
 		case 2:		
-			reg();					
+			try { reg(); }
+			catch (const char* ex)
+			{
+				cout << ex << endl;
+			}
 			break;
 		case 3:
 			exit(0);
