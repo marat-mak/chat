@@ -28,8 +28,8 @@ int main()
 		cout << "============================================\n";
 		for (int i = 0; i <= usersNum; ++i)
 			{
-			cout << users.operator[](i).getName() << endl;
-			users.operator[](i).show();
+			cout << users.operator[](i).getName() << " " << users.operator[](i).getLogin() << endl;
+			//users.operator[](i).show();
 			}
 		cout << "============================================\n";
 		//++count;
