@@ -6,12 +6,12 @@ using namespace std;
 class User
 {
 private:
-	//string _name;
+	string _name;
 	string _login;
 	string _password;
 public:
 	User() = default;
-	User(string login, string password);
+	User(string name, string login, string password);
 	~User() = default;
 	void show();
 	string getLogin();

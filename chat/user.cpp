@@ -1,6 +1,6 @@
 #include "user.h"
 
-User::User(string login, string password) : _login(login), _password(password)
+User::User(string name, string login, string password) : _login(login), _password(password)
 {
 }
 void User::show()

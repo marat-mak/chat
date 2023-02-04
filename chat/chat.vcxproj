@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="container.h" />
     <ClInclude Include="login.h" />
+    <ClInclude Include="register.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

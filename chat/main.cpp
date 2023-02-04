@@ -1,20 +1,19 @@
-#include "user.h"
+#include "register.h"
+
 using namespace std;
 
 int main()
 {
-	User* user = new User[10];
+	//User* user = new User[3];
 	//int count = 0;
-	short usersNum = 0; //кол-во зарегистрированных пользователей
+ //кол-во зарегистрированных пользователей
 	while (true)
 	{
 		cout << "Welcome to chat" << endl;
 		cout << "Press [1] - login; [2] - registry new user; [3] - exit" << endl;
 		short choice;
 		cin >> choice;
-		string login;
-		string password;
-		string name;
+
 		
 		switch (choice)
 		{
@@ -23,9 +22,9 @@ int main()
 			cin >> login;
 			cout << "Enter password: ";
 			cin >> password;
-			for (int i = 0; i < usersNum; ++i)
+			for (int i = 0; i < users->getSize(); ++i)
 			{
-				if (user[i].getLogin() == login && user[i].getPassword() == password)
+				if (users->operator[](i).getLogin() == login && users->operator[](i).getPassword() == password)
 					cout << "Login correct" << endl;
 				
 			}
@@ -35,21 +34,14 @@ int main()
 
 		case 2:
 		
-			//cout << "Enter username: ";
-			//cin >> name;
-			cout << "Enter login: ";
-			cin >> login;
-			cout << "Enter password: ";
-			cin >> password;
-			user[usersNum] = User(login, password);	
-			++usersNum;
+			reg();
 			
 			
 			break;
 		
 
 		case 3:
-			delete[] user;
+			//delete[] users;
 			exit(0);
 
 		default:
@@ -59,7 +51,7 @@ int main()
 		for (int i = 0; i <= usersNum; ++i)
 			{
 			
-				user[i].show();
+				users->operator[](i).show();
 		//		cout << user[i]->getLogin() << endl;
 			}
 		cout << "============================================\n";
