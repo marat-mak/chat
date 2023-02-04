@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 
+
 class User
 {
 private:
@@ -14,6 +15,7 @@ public:
 	User(string name, string login, string password);
 	~User() = default;
 	void show();
+	string getName();
 	string getLogin();
 	string getPassword();
 	friend ostream& operator<<(ostream& output, const User& u);

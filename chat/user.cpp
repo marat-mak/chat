@@ -1,11 +1,16 @@
 #include "user.h"
 
-User::User(string name, string login, string password) : _login(login), _password(password)
+
+User::User(string name, string login, string password) : _name(name), _login(login), _password(password)
 {
 }
 void User::show()
 {
     cout << _login << " " << _password << endl;
+}
+string User::getName()
+{
+    return _name;
 }
 string User::getLogin()
 {
