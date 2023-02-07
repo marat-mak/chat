@@ -13,9 +13,10 @@ string currentUser;
 void readMessage();
 void writeMessage();
 void userMenu();
+void showUsers();
 
-Container<User> users(1);
-Container<Message> messages(1);
+Container<User> users;
+Container<Message> messages;
 
 void reg()
 {
@@ -56,7 +57,7 @@ void signUp()
 
 void userMenu()
 {
-	cout << "Press [1] - read message; [2] - write message; [3] - exit" << endl;
+	cout << "Press [1] - read message; [2] - write message; [3] - show users; [4] - exit" << endl;
 	short ch;
 	cin >> ch;
 	switch (ch)
@@ -68,8 +69,10 @@ void userMenu()
 		writeMessage();
 		break;
 	case 3:
-		exit(0);
+		showUsers();
 		break;
+	case 4:
+		exit(0);
 	default:
 		break;
 	}
@@ -95,5 +98,16 @@ void writeMessage()
 	cin >> sms;
 	messages.addItem(Message(currentUser, to, sms));
 	messagesNum++;
+	userMenu();
+}
+
+void showUsers()
+{
+	cout << "=============================================" << endl;
+	for (int i = 0; i < users.getSize();i++)
+	{
+		users[i].show();
+	}
+	cout << "=============================================" << endl;
 	userMenu();
 }
