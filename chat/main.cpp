@@ -1,10 +1,17 @@
+#include <string>
+#include <iostream>
+#include "container.h"
 #include "register.h"
+#include "user.h"
+#include "message.h"
 
 
 using namespace std;
 
+
 int main()
 {
+	
 
 	while (true)
 	{
@@ -15,10 +22,18 @@ int main()
 		switch (choice)
 		{
 		case 1:			
-			signUp();				
+			try { signUp(); }
+			catch (const char* ex) 
+			{
+				cout << ex << endl;
+			}
 			break;
 		case 2:		
-			reg();					
+			try { reg(); }
+			catch (const char* ex)
+			{
+				cout << ex << endl;
+			}
 			break;
 		case 3:
 			exit(0);
@@ -26,12 +41,12 @@ int main()
 			break;
 		}
 		cout << "============================================\n";
-		for (int i = 0; i <= usersNum; ++i)
-			{
-			cout << users.operator[](i).getName() << " " << users.operator[](i).getLogin() << endl;
+	//	for (int i = 0; i <= usersNum; ++i)
+	//		{
+	//		cout << users.operator[](i).getName() << " " << users.operator[](i).getLogin() << endl;
 			//users.operator[](i).show();
-			}
-		cout << "============================================\n";
+		//	}
+	//	cout << "============================================\n";
 		//++count;
 	}
 	
