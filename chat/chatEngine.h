@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 #include "container.h"
 #include "user.h"
 #include "message.h"
@@ -41,6 +42,7 @@ bool signUp()
 	{
 		if (users[i].getLogin() == login && users[i].getPassword() == password)
 		{
+			system("cls");
 			cout << "Login correct! Hello " << users[i].getName() << endl;
 			currentUser = login;
 			return true;
@@ -53,16 +55,23 @@ bool signUp()
 
 void userMenu()
 {
+	
 	cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
 	char ch = 'null';
 	cin >> ch;
 	switch (ch)
 	{
 	case 'r':
+		
 		readMessage();
 		break;
 	case 'w':
-		writeMessage();
+		try { writeMessage(); }
+		catch (const char* ex)
+		{
+			cout << ex << endl;
+			userMenu();
+		}
 		break;
 	case 's':
 		showUsers();
@@ -74,6 +83,7 @@ void userMenu()
 
 void readMessage()
 {
+	 
 	for (int i = 0; i < messages.getSize(); i++)
 	{
 		if (messages[i].getTo() == currentUser || messages[i].getTo() == "all")
@@ -84,10 +94,21 @@ void readMessage()
 
 void writeMessage()
 {
+	
 	string to;
 	string sms;
+	bool test = false;
 	cout << "to whom(write 'all' for all): ";
 	cin >> to;
+	for (int i = 0; i < users.getSize(); i++)
+	{
+		if (users[i].getLogin() == to || to == "all")
+		{
+			test = true;
+			continue;
+		}
+	}
+	if (test == false) throw "no user in base";
 	cout << "enter message: ";
 	cin >> sms;
 	messages.addItem(Message(currentUser, to, sms));
@@ -96,6 +117,7 @@ void writeMessage()
 
 void showUsers()
 {
+	
 	cout << "=============================================" << endl;
 	for (int i = 0; i < users.getSize();i++)
 	{
