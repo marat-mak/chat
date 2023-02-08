@@ -21,6 +21,9 @@
     <ClCompile Include="user.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="message.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="user.h">
@@ -29,7 +32,10 @@
     <ClInclude Include="container.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="register.h">
+    <ClInclude Include="chatEngine.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="message.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

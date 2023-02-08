@@ -1,53 +1,44 @@
-#include <string>
-#include <iostream>
-#include "container.h"
-#include "register.h"
-#include "user.h"
-#include "message.h"
-
-
+#include "chatEngine.h"
 using namespace std;
 
 
 int main()
-{
-	
-
-	while (true)
+{	
+	char choice = 'null';
+	while (choice != 'q')
 	{
 		cout << "Welcome to chat" << endl;
-		cout << "Press [1] - login; [2] - registry new user; [3] - exit" << endl;
-		short choice;
-		cin >> choice;		
+		cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << endl;
+		cin >> choice;
 		switch (choice)
 		{
-		case 1:			
-			try { signUp(); }
-			catch (const char* ex) 
+		case 's':
+			try
+			{
+				signUp();
+				if (signUp)
+				{
+					userMenu();
+				}
+			}			
+			catch (const char* ex)            
 			{
 				cout << ex << endl;
 			}
 			break;
-		case 2:		
+		case 'r':
 			try { reg(); }
 			catch (const char* ex)
 			{
 				cout << ex << endl;
 			}
 			break;
-		case 3:
-			exit(0);
+		case 'q':
+			break;
 		default:
 			break;
 		}
 		cout << "============================================\n";
-	//	for (int i = 0; i <= usersNum; ++i)
-	//		{
-	//		cout << users.operator[](i).getName() << " " << users.operator[](i).getLogin() << endl;
-			//users.operator[](i).show();
-		//	}
-	//	cout << "============================================\n";
-		//++count;
 	}
 	
 	return 0;

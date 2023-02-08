@@ -4,9 +4,9 @@
 User::User(string name, string login, string password) : _name(name), _login(login), _password(password)
 {
 }
-void User::show()
+void User::show()                                              
 {
-    cout << _login << " " << _password << endl;
+    cout << _name << " " << _login << " " << _password << endl;
 }
 string User::getName()
 {
@@ -22,6 +22,6 @@ string User::getPassword()
 }
 ostream& operator<<(ostream& output, const User& u)
 {
-    output << u._login << " " << u._password;
+    output << u._name << " " << u._login << " " << u._password;
     return output;
 }

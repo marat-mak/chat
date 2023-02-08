@@ -14,7 +14,7 @@ public:
 	User() = default;
 	User(string name, string login, string password);
 	~User() = default;
-	void show();
+	void show();                                           //видимо уже не нужно
 	string getName();
 	string getLogin();
 	string getPassword();

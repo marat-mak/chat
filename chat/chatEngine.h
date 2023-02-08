@@ -6,8 +6,6 @@
 string name;
 string login;
 string password;
-short usersNum = 0;      //нам точно нужны
-int messagesNum = 0;					//эти переменные? есть же getSize  =)
 string currentUser;
 
 void readMessage();
@@ -28,13 +26,12 @@ void reg()
 	cin >> password;
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getLogin() == login) throw "login is bussy";   // по хорошему бы вводить логин первым и сразу его проверять 
+		if (users[i].getLogin() == login) throw "login is busy";   // по хорошему бы вводить логин первым и сразу его проверять 
 	}																//чтоб лишний раз не вводить пароль и имя если логин занят
-	users.addItem(User(name, login, password));
-	++usersNum;
+	users.addItem(User(name, login, password));	
 }
 
-void signUp()
+bool signUp()
 {
 	cout << "Enter login: ";
 	cin >> login;
@@ -42,13 +39,12 @@ void signUp()
 	cin >> password;
 	for (int i = 0; i < users.getSize(); ++i)
 	{
-		if (users.operator[](i).getLogin() == login && users.operator[](i).getPassword() == password)
+		if (users[i].getLogin() == login && users[i].getPassword() == password)
 		{
 			cout << "Login correct! Hello " << users[i].getName() << endl;
 			currentUser = login;
-			userMenu();
-		}
-		
+			return true;
+		}					
 	}
 	throw "incorrect user or password";
 }
@@ -57,22 +53,20 @@ void signUp()
 
 void userMenu()
 {
-	cout << "Press [1] - read message; [2] - write message; [3] - show users; [4] - exit" << endl;
-	short ch;
+	cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
+	char ch = 'null';
 	cin >> ch;
 	switch (ch)
 	{
-	case 1:
+	case 'r':
 		readMessage();
 		break;
-	case 2:
+	case 'w':
 		writeMessage();
 		break;
-	case 3:
+	case 's':
 		showUsers();
 		break;
-	case 4:
-		exit(0);
 	default:
 		break;
 	}
@@ -97,7 +91,6 @@ void writeMessage()
 	cout << "enter message: ";
 	cin >> sms;
 	messages.addItem(Message(currentUser, to, sms));
-	messagesNum++;
 	userMenu();
 }
 
@@ -106,7 +99,7 @@ void showUsers()
 	cout << "=============================================" << endl;
 	for (int i = 0; i < users.getSize();i++)
 	{
-		users[i].show();
+		cout << users[i].getName() << endl;                                             //достаточно только имени и без пароля)
 	}
 	cout << "=============================================" << endl;
 	userMenu();
