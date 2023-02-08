@@ -27,8 +27,8 @@ void reg()
 	cin >> password;
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getLogin() == login) throw "login is busy";   // ïî õîğîøåìó áû ââîäèòü ëîãèí ïåğâûì è ñğàçó åãî ïğîâåğÿòü 
-	}																//÷òîá ëèøíèé ğàç íå ââîäèòü ïàğîëü è èìÿ åñëè ëîãèí çàíÿò
+		if (users[i].getLogin() == login) throw "login is busy";   // Ã¯Ã® ÃµÃ®Ã°Ã®Ã¸Ã¥Ã¬Ã³ Ã¡Ã» Ã¢Ã¢Ã®Ã¤Ã¨Ã²Ã¼ Ã«Ã®Ã£Ã¨Ã­ Ã¯Ã¥Ã°Ã¢Ã»Ã¬ Ã¨ Ã±Ã°Ã Ã§Ã³ Ã¥Ã£Ã® Ã¯Ã°Ã®Ã¢Ã¥Ã°Ã¿Ã²Ã¼ 
+	}																//Ã·Ã²Ã®Ã¡ Ã«Ã¨Ã¸Ã­Ã¨Ã© Ã°Ã Ã§ Ã­Ã¥ Ã¢Ã¢Ã®Ã¤Ã¨Ã²Ã¼ Ã¯Ã Ã°Ã®Ã«Ã¼ Ã¨ Ã¨Ã¬Ã¿ Ã¥Ã±Ã«Ã¨ Ã«Ã®Ã£Ã¨Ã­ Ã§Ã Ã­Ã¿Ã²
 	users.addItem(User(name, login, password));	
 }
 
@@ -100,6 +100,7 @@ void writeMessage()
 	bool test = false;
 	cout << "to whom(write 'all' for all): ";
 	cin >> to;
+  cin.ignore();
 	for (int i = 0; i < users.getSize(); i++)
 	{
 		if (users[i].getLogin() == to || to == "all")
@@ -110,7 +111,7 @@ void writeMessage()
 	}
 	if (test == false) throw "no user in base";
 	cout << "enter message: ";
-	cin >> sms;
+	getline(cin, sms);
 	messages.addItem(Message(currentUser, to, sms));
 	userMenu();
 }
