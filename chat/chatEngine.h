@@ -99,7 +99,7 @@ void showUsers()
 	cout << "=============================================" << endl;
 	for (int i = 0; i < users.getSize();i++)
 	{
-		cout << users[i].getName() << endl;                                             //достаточно только имени и без пароля)
+		cout << "name: " << users[i].getName() << "    login: " << users[i].getLogin() << endl;
 	}
 	cout << "=============================================" << endl;
 	userMenu();

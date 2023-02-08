@@ -35,8 +35,6 @@ int main()
 			break;
 		case 'q':
 			break;
-		default:
-			break;
 		}
 		cout << "============================================\n";
 	}
