@@ -88,8 +88,9 @@ void writeMessage()
 	string sms;
 	cout << "to whom(write 'all' for all): ";
 	cin >> to;
+	cin.ignore();
 	cout << "enter message: ";
-	cin >> sms;
+	getline(cin, sms);
 	messages.addItem(Message(currentUser, to, sms));
 	userMenu();
 }
