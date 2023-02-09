@@ -19,28 +19,19 @@ Container<Message> messages;
 
 void reg()
 {
-	bool bussy=false;
+	
 	cout << "Enter login: ";
-	do
-	{
-		cin >> login;
-		for (int i = 0; i < users.getSize(); i++)
-		{
-			if (users[i].getLogin() == login)
-			{
-				cout << "Login is busy, try another login:";
-				bussy = true;
-				break;
-			}
-			else bussy = false;
-		}
-	} while (bussy);
-	/*for (int i = 0; i < users.getSize(); i++)
+	cin >> login;
+	for (int i = 0; i < users.getSize(); i++)
 	{
 		if (users[i].getLogin() == login) throw "login is busy";
-	}*/
+	}
 	cout << "Enter username: ";
 	cin >> name;
+	for (int i = 0; i < users.getSize(); i++)
+	{
+		if (users[i].getName() == name) throw "name is busy";
+	}
 	cout << "Enter password: ";
 	cin >> password;											
 	users.addItem(User(name, login, password));	
@@ -58,11 +49,11 @@ bool signUp()
 		{
 			system("cls");
 			cout << "Login correct! Hello " << users[i].getName() << endl;
-			currentUser = login;
+			currentUser = users[i].getName();
 			return true;
 		}					
 	}
-	throw "incorrect user or password";
+	throw "incorrect login or password";
 }
 
 
@@ -117,7 +108,7 @@ void writeMessage()
   cin.ignore();
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getLogin() == to || to == "all")
+		if (users[i].getName() == to || to == "all")
 		{
 			test = true;
 			continue;
@@ -136,7 +127,7 @@ void showUsers()
 	cout << "=============================================" << endl;
 	for (int i = 0; i < users.getSize();i++)
 	{
-		cout << "name: " << users[i].getName() << "    login: " << users[i].getLogin() << endl;
+		cout << i + 1 << ". " << users[i].getName() << endl;
 	}
 	cout << "=============================================" << endl;
 	userMenu();
