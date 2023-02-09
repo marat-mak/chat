@@ -20,17 +20,18 @@ Container<Message> messages;
 void reg()
 {
 	
-	cout << "Enter login: ";
-	cin >> login;
-	for (int i = 0; i < users.getSize(); i++)
-	{
-		if (users[i].getLogin() == login) throw "login is busy";
-	}
+	
 	cout << "Enter username: ";
 	cin >> name;
 	for (int i = 0; i < users.getSize(); i++)
 	{
 		if (users[i].getName() == name) throw "name is busy";
+	}
+	cout << "Enter login: ";
+	cin >> login;
+	for (int i = 0; i < users.getSize(); i++)
+	{
+		if (users[i].getLogin() == login) throw "login is busy";
 	}
 	cout << "Enter password: ";
 	cin >> password;											
