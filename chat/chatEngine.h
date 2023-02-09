@@ -28,7 +28,7 @@ void reg()
 		{
 			if (users[i].getLogin() == login)
 			{
-				cout << "Login is bussy, try another login:";
+				cout << "Login is busy, try another login:";
 				bussy = true;
 				break;
 			}
