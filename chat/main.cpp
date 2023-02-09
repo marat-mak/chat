@@ -27,11 +27,12 @@ int main()
 			}
 			break;
 		case 'r':
-			try { reg(); }
+			reg();
+			/*try { reg(); }
 			catch (const char* ex)
 			{
 				cout << ex << endl;
-			}
+			}*/
 			break;
 		case 'q':
 			break;

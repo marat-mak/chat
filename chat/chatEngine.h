@@ -19,16 +19,30 @@ Container<Message> messages;
 
 void reg()
 {
+	bool bussy=false;
+	cout << "Enter login: ";
+	do
+	{
+		cin >> login;
+		for (int i = 0; i < users.getSize(); i++)
+		{
+			if (users[i].getLogin() == login)
+			{
+				cout << "Login is bussy, try another login:";
+				bussy = true;
+				break;
+			}
+			else bussy = false;
+		}
+	} while (bussy);
+	/*for (int i = 0; i < users.getSize(); i++)
+	{
+		if (users[i].getLogin() == login) throw "login is busy";
+	}*/
 	cout << "Enter username: ";
 	cin >> name;
-	cout << "Enter login: ";
-	cin >> login;
 	cout << "Enter password: ";
-	cin >> password;
-	for (int i = 0; i < users.getSize(); i++)
-	{
-		if (users[i].getLogin() == login) throw "login is busy";   // ïî õîðîøåìó áû ââîäèòü ëîãèí ïåðâûì è ñðàçó åãî ïðîâåðÿòü 
-	}																//÷òîá ëèøíèé ðàç íå ââîäèòü ïàðîëü è èìÿ åñëè ëîãèí çàíÿò
+	cin >> password;											
 	users.addItem(User(name, login, password));	
 }
 
