@@ -3,10 +3,12 @@ using namespace std;
 
 
 int main()
-{	
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	char choice = 'null';
 	while (choice != 'q')
 	{
+		SetConsoleTextAttribute(hConsole, 11);
 		cout << "Welcome to chat" << endl;
 		cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << endl;
 		cin >> choice;
