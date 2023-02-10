@@ -4,13 +4,16 @@ using namespace std;
 
 int main()
 {
+	setlocale(LC_ALL, "");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	char choice = 'null';
 	while (choice != 'q')
 	{
 		SetConsoleTextAttribute(hConsole, 11);
-		cout << "Welcome to chat" << endl;
-		cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << endl;
+		cout << "Добро пожаловать в чат!" << endl;
+		cout << "Введите [s] - для входа; [r] - регистрации; [q] - выхода" << endl;
 		cin >> choice;
 		switch (choice)
 		{

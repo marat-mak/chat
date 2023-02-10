@@ -29,32 +29,33 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void reg()
 {
 	SetConsoleTextAttribute(hConsole, 11);
-	cout << "Enter username: ";
+	cout << "Введите имя пользователя: ";
 	cin >> name;
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getName() == name) throw "name is busy";
+		if (users[i].getName() == name) throw "пользователь с таким именем уже существует";
 	}
 	cout << "Enter login: ";
 	cin >> login;
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getLogin() == login) throw "login is busy";
+		if (users[i].getLogin() == login) throw "данный логин занят";
 	}
 	while (true)
 	{
-		cout << "Enter password (min 6 characters): " << endl;
+		cout << "EВведите пароль (минимум 6 символов): " << endl;
 		cin >> password;
 
 		if (password.length() <= 5)
 		{
 			SetConsoleTextAttribute(hConsole, 12);
-			cout << "the password is too short" << endl << endl;
-			cout << "press q to exit" << endl << endl;
+			cout << "пароль слишком короткий" << endl << endl;
+			cout << "нажмите q для возврата в меню" << endl << endl;
 
 			if (password == "q")
 			{
-				exit(0);
+				break;
+				//exit(0);
 			}
 		}
 		else
@@ -67,21 +68,21 @@ void reg()
 bool signUp()
 {
 	SetConsoleTextAttribute(hConsole, 13);
-	cout << "Enter login: ";
+	cout << "Введите логин: ";
 	cin >> login;
-	cout << "Enter password: ";
+	cout << "Введите пароль: ";
 	cin >> password;
 	for (int i = 0; i < users.getSize(); ++i)
 	{
 		if (users[i].getLogin() == login && users[i].getPassword() == password)
 		{
 			system("cls");
-			cout << "Login correct! Hello " << users[i].getName() << endl;
+			cout << "Привет " << users[i].getName() << "!" << endl;
 			currentUser = users[i].getName();
 			return true;
 		}					
 	}
-	throw "incorrect login or password";
+	throw "неверный логин или пароль";
 }
 
 
@@ -89,7 +90,7 @@ bool signUp()
 void userMenu()
 {
 	SetConsoleTextAttribute(hConsole, 14);
-	cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
+	cout << "Введите [r] - прочитать сообщения; [w] - написать сообщение; [s] - вывести список пользователей; любой другой символ для возврата в главное меню" << endl;
 	char ch = 'null';
 	cin >> ch;
 	switch (ch)
@@ -132,7 +133,7 @@ void writeMessage()
 	string sms;
 	bool test = false;
 	SetConsoleTextAttribute(hConsole, 9);
-	cout << "to whom(write 'all' for all): ";
+	cout << "введите имя адресата(или введите all чтобы отправить сообщение всем пользователям)\n: ";
 	cin >> to;
   cin.ignore();
 	for (int i = 0; i < users.getSize(); i++)
@@ -143,8 +144,8 @@ void writeMessage()
 			continue;
 		}
 	}
-	if (test == false) throw "no user in base";
-	cout << "enter message: ";
+	if (test == false) throw "пользователя с таким именем нет в базе чата, проверьте список пользователей";
+	cout << "введите сообщение: ";
 	getline(cin, sms);
 	messages.addItem(Message(currentUser, to, sms));
 	userMenu();
