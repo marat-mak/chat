@@ -29,33 +29,32 @@ HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void reg()
 {
 	SetConsoleTextAttribute(hConsole, 11);
-	cout << "Ââåäèòå èìÿ ïîëüçîâàòåëÿ: ";
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ: ";
 	cin >> name;
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getName() == name) throw "ïîëüçîâàòåëü ñ òàêèì èìåíåì óæå ñóùåñòâóåò";
+		if (users[i].getName() == name) throw "Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ Ð¸Ð¼ÐµÐ½ÐµÐ¼ ÑƒÐ¶Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚";
 	}
 	cout << "Enter login: ";
 	cin >> login;
 	for (int i = 0; i < users.getSize(); i++)
 	{
-		if (users[i].getLogin() == login) throw "äàííûé ëîãèí çàíÿò";
+		if (users[i].getLogin() == login) throw "Ð´Ð°Ð½Ð½Ñ‹Ð¹ Ð»Ð¾Ð³Ð¸Ð½ Ð·Ð°Ð½ÑÑ‚";
 	}
 	while (true)
 	{
-		cout << "EÂâåäèòå ïàðîëü (ìèíèìóì 6 ñèìâîëîâ): " << endl;
+		cout << "EÐ’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ (Ð¼Ð¸Ð½Ð¸Ð¼ÑƒÐ¼ 6 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²): " << endl;
 		cin >> password;
 
 		if (password.length() <= 5)
 		{
 			SetConsoleTextAttribute(hConsole, 12);
-			cout << "ïàðîëü ñëèøêîì êîðîòêèé" << endl << endl;
-			cout << "íàæìèòå q äëÿ âîçâðàòà â ìåíþ" << endl << endl;
+			cout << "Ð¿Ð°Ñ€Ð¾Ð»ÑŒ ÑÐ»Ð¸ÑˆÐºÐ¾Ð¼ ÐºÐ¾Ñ€Ð¾Ñ‚ÐºÐ¸Ð¹" << endl << endl;
+			cout << "Ð½Ð°Ð¶Ð¼Ð¸Ñ‚Ðµ q Ð´Ð»Ñ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð° Ð² Ð¼ÐµÐ½ÑŽ" << endl << endl;
 
 			if (password == "q")
 			{
-				break;
-				//exit(0);
+				exit(0);
 			}
 		}
 		else
@@ -68,21 +67,21 @@ void reg()
 bool signUp()
 {
 	SetConsoleTextAttribute(hConsole, 13);
-	cout << "Ââåäèòå ëîãèí: ";
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð»Ð¾Ð³Ð¸Ð½: ";
 	cin >> login;
-	cout << "Ââåäèòå ïàðîëü: ";
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ: ";
 	cin >> password;
 	for (int i = 0; i < users.getSize(); ++i)
 	{
 		if (users[i].getLogin() == login && users[i].getPassword() == password)
 		{
 			system("cls");
-			cout << "Ïðèâåò " << users[i].getName() << "!" << endl;
+			cout << "ÐŸÑ€Ð¸Ð²ÐµÑ‚ " << users[i].getName() << "!" << endl;
 			currentUser = users[i].getName();
 			return true;
 		}					
 	}
-	throw "íåâåðíûé ëîãèí èëè ïàðîëü";
+	throw "Ð½ÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ Ð»Ð¾Ð³Ð¸Ð½ Ð¸Ð»Ð¸ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ";
 }
 
 
@@ -90,7 +89,7 @@ bool signUp()
 void userMenu()
 {
 	SetConsoleTextAttribute(hConsole, 14);
-	cout << "Ââåäèòå [r] - ïðî÷èòàòü ñîîáùåíèÿ; [w] - íàïèñàòü ñîîáùåíèå; [s] - âûâåñòè ñïèñîê ïîëüçîâàòåëåé; ëþáîé äðóãîé ñèìâîë äëÿ âîçâðàòà â ãëàâíîå ìåíþ" << endl;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ [r] - Ð¿Ñ€Ð¾Ñ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ; [w] - Ð½Ð°Ð¿Ð¸ÑÐ°Ñ‚ÑŒ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ; [s] - Ð²Ñ‹Ð²ÐµÑÑ‚Ð¸ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹; Ð»ÑŽÐ±Ð¾Ð¹ Ð´Ñ€ÑƒÐ³Ð¾Ð¹ ÑÐ¸Ð¼Ð²Ð¾Ð» Ð´Ð»Ñ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚Ð° Ð² Ð³Ð»Ð°Ð²Ð½Ð¾Ðµ Ð¼ÐµÐ½ÑŽ" << endl;
 	char ch = 'null';
 	cin >> ch;
 	switch (ch)
@@ -133,7 +132,7 @@ void writeMessage()
 	string sms;
 	bool test = false;
 	SetConsoleTextAttribute(hConsole, 9);
-	cout << "ââåäèòå èìÿ àäðåñàòà(èëè ââåäèòå all ÷òîáû îòïðàâèòü ñîîáùåíèå âñåì ïîëüçîâàòåëÿì)\n: ";
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ Ð°Ð´Ñ€ÐµÑÐ°Ñ‚Ð°(Ð¸Ð»Ð¸ Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ all Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð²ÑÐµÐ¼ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑÐ¼)\n: ";
 	cin >> to;
   cin.ignore();
 	for (int i = 0; i < users.getSize(); i++)
@@ -144,8 +143,8 @@ void writeMessage()
 			continue;
 		}
 	}
-	if (test == false) throw "ïîëüçîâàòåëÿ ñ òàêèì èìåíåì íåò â áàçå ÷àòà, ïðîâåðüòå ñïèñîê ïîëüçîâàòåëåé";
-	cout << "ââåäèòå ñîîáùåíèå: ";
+	if (test == false) throw "Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ Ñ Ñ‚Ð°ÐºÐ¸Ð¼ Ð¸Ð¼ÐµÐ½ÐµÐ¼ Ð½ÐµÑ‚ Ð² Ð±Ð°Ð·Ðµ Ñ‡Ð°Ñ‚Ð°, Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑŒÑ‚Ðµ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÐµÐ¹";
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ: ";
 	getline(cin, sms);
 	messages.addItem(Message(currentUser, to, sms));
 	userMenu();
