@@ -1,13 +1,20 @@
 #pragma once
+
 #include <stdlib.h>
 #include "container.h"
 #include "user.h"
 #include "message.h"
+#include <conio.h>
+#include <windows.h>
+#include <stdio.h>
+#include <cstdlib>
+
 
 string name;
 string login;
 string password;
 string currentUser;
+
 
 void readMessage();
 void writeMessage();
@@ -16,11 +23,12 @@ void showUsers();
 
 Container<User> users;
 Container<Message> messages;
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 
 void reg()
 {
-	
-	
+	SetConsoleTextAttribute(hConsole, 11);
 	cout << "Enter username: ";
 	cin >> name;
 	for (int i = 0; i < users.getSize(); i++)
@@ -33,13 +41,32 @@ void reg()
 	{
 		if (users[i].getLogin() == login) throw "login is busy";
 	}
-	cout << "Enter password: ";
-	cin >> password;											
-	users.addItem(User(name, login, password));	
+	while (true)
+	{
+		cout << "Enter password (min 6 characters): " << endl;
+		cin >> password;
+
+		if (password.length() <= 5)
+		{
+			SetConsoleTextAttribute(hConsole, 12);
+			cout << "the password is too short" << endl << endl;
+			cout << "press q to exit" << endl << endl;
+
+			if (password == "q")
+			{
+				exit(0);
+			}
+		}
+		else
+			break;
+	}
+
+	users.addItem(User(name, login, password));
 }
 
 bool signUp()
 {
+	SetConsoleTextAttribute(hConsole, 13);
 	cout << "Enter login: ";
 	cin >> login;
 	cout << "Enter password: ";
@@ -61,7 +88,7 @@ bool signUp()
 
 void userMenu()
 {
-	
+	SetConsoleTextAttribute(hConsole, 14);
 	cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
 	char ch = 'null';
 	cin >> ch;
@@ -104,6 +131,7 @@ void writeMessage()
 	string to;
 	string sms;
 	bool test = false;
+	SetConsoleTextAttribute(hConsole, 9);
 	cout << "to whom(write 'all' for all): ";
 	cin >> to;
   cin.ignore();
@@ -124,7 +152,7 @@ void writeMessage()
 
 void showUsers()
 {
-	
+	SetConsoleTextAttribute(hConsole, 11);
 	cout << "=============================================" << endl;
 	for (int i = 0; i < users.getSize();i++)
 	{
