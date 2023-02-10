@@ -12,8 +12,8 @@ int main()
 	while (choice != 'q')
 	{
 		SetConsoleTextAttribute(hConsole, 11);
-		cout << "Äîáðî ïîæàëîâàòü â ÷àò!" << endl;
-		cout << "Ââåäèòå [s] - äëÿ âõîäà; [r] - ðåãèñòðàöèè; [q] - âûõîäà" << endl;
+		cout << "Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² Ñ‡Ð°Ñ‚!" << endl;
+		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ [s] - Ð´Ð»Ñ Ð²Ñ…Ð¾Ð´Ð°; [r] - Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸; [q] - Ð²Ñ‹Ñ…Ð¾Ð´Ð°" << endl;
 		cin >> choice;
 		switch (choice)
 		{
