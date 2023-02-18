@@ -45,7 +45,7 @@ void reg()
 
     cout << "Enter password (min 6 characters): " << endl;
     int ch = 0;
-    while (password != "q")
+    while (true)
     {
         ch = _getch();
         if (ch == 13)
@@ -56,7 +56,7 @@ void reg()
                 cout << endl;
                 cout << "the password is too short" << endl << endl;
                 cout << "please try again" << endl << endl;
-                cout << "please enter 'q' to exit the main menu" << endl << endl;
+                cout << "press ESC to cancel" << endl << endl;
                 cout << "Enter password (min 6 characters): " << endl;
                 password.clear();
                 continue;
@@ -86,7 +86,10 @@ void reg()
             password += (char)ch;
             // Преврашение кода из целого числа в символ.
         }
-
+        if (ch == 27)
+        {
+            break;
+        }
     }
 }
 
@@ -215,7 +218,7 @@ void writeMessage()
     string to;
     string sms;
     bool test = false;
-    SetConsoleTextAttribute(hConsole, 9);
+    SetConsoleTextAttribute(hConsole, 7);
     cout << "to whom(write 'all' for all): ";
     cin >> to;
     cin.ignore();
