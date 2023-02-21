@@ -63,6 +63,7 @@ void reg()
             else
             {
                 users.addItem(User(name, login, password));
+                cout << "\nUser " << name << " registered" << endl;
                 password.clear();
                 break;
             }
@@ -147,7 +148,7 @@ bool signUp()
 void userMenu()
 {
     SetConsoleTextAttribute(hConsole, 14);
-    cout << "Press [r] - read message; [w] - write message; [s] - show users; [ESC] - exit to main menu" << endl;
+    cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
     int ch = 0;
     ch = _getche();
     cout << endl;
@@ -168,7 +169,7 @@ void userMenu()
     {
         showUsers();
     }
-    if (ch == 27)
+    else
     {
         return;
     }
