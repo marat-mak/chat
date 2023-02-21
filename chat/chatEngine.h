@@ -179,8 +179,12 @@ void readMessage()
     cout << "=============================================" << endl;
     for (int i = 0; i < mes.getSize(); i++)
     {
-        if (mes[i].getTo() == currentUser || mes[i].getTo() == "all")
-            cout << mes[i].getFrom() << ": " << mes[i].getMessage() << endl;
+        if (mes[i].getTo() == currentUser || mes[i].getTo() == "all" || mes[i].getFrom() == currentUser)
+        {
+            if(mes[i].getFrom() == currentUser)  cout << "You: -> " << mes[i].getMessage() << endl;
+        
+            else cout << mes[i].getFrom() << ": " << mes[i].getMessage() << endl;
+        }
     }
     cout << "=============================================" << endl;
     userMenu();
