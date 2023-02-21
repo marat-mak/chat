@@ -30,19 +30,18 @@ void reg()
     string password;
 
     SetConsoleTextAttribute(hConsole, 11);
-    cout << "Enter username: ";
+    cout << "Enter username:" << endl;
     cin >> name;
     for (int i = 0; i < users.getSize(); i++)
     {
         if (users[i].getName() == name) throw "name is busy";
     }
-    cout << "Enter login: ";
+    cout << "Enter login:" << endl;
     cin >> login;
     for (int i = 0; i < users.getSize(); i++)
     {
         if (users[i].getLogin() == login) throw "login is busy";
     }
-
     cout << "Enter password (min 6 characters): " << endl;
     int ch = 0;
     while (true)
@@ -71,14 +70,12 @@ void reg()
 
         if (ch == 8)
         {
-
             cout << (char)8 << ' ' << char(8);
 
-
             if (!password.empty())
-
+            {
                 password.erase(password.length() - 1);
-
+            }
         }
         else
         {
@@ -100,7 +97,7 @@ bool signUp()
     string password;
 
     SetConsoleTextAttribute(hConsole, 13);
-    cout << "Enter login: ";
+    cout << "Enter login:" << endl;
     cin >> login;
     cout << "Enter password: ";
     int ch = 0;
@@ -147,74 +144,50 @@ bool signUp()
     }
 }
 
-//bool signUp()
-//{
-//    string name;
-//    string login;
-//    string password;
-
-//    SetConsoleTextAttribute(hConsole, 13);
-//    cout << "Enter login: ";
-//    cin >> login;
-//    cout << "Enter password: ";
-
-//    cin >> password;
-
-//    for (int i = 0; i < users.getSize(); ++i)
-//    {
-//        if (users[i].getLogin() == login && users[i].getPassword() == password)
-//        {
-//            system("cls");
-//            cout << "Login correct! Hello " << users[i].getName() << endl;
-//            currentUser = users[i].getName();
-//            return true;
-//        }
-//    }
-//    throw "incorrect login or password";
-//}
-
 void userMenu()
 {
     SetConsoleTextAttribute(hConsole, 14);
-    cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
-    char ch = 'null';
-    cin >> ch;
-    switch (ch)
+    cout << "Press [r] - read message; [w] - write message; [s] - show users; [ESC] - exit to main menu" << endl;
+    int ch = 0;
+    ch = _getche();
+    cout << endl;
+    if (ch == 114)
     {
-    case 'r':
-
         readMessage();
-        break;
-    case 'w':
+    }
+    if (ch == 119)
+    {
         try { writeMessage(); }
         catch (const char* ex)
         {
             cout << ex << endl;
             userMenu();
         }
-        break;
-    case 's':
+    }
+    if (ch == 115)
+    {
         showUsers();
-        break;
-    default:
-        break;
+    }
+    if (ch == 27)
+    {
+        return;
     }
 }
 
 void readMessage()
 {
-
+    cout << "=============================================" << endl;
     for (int i = 0; i < mes.getSize(); i++)
     {
         if (mes[i].getTo() == currentUser || mes[i].getTo() == "all")
             cout << mes[i].getFrom() << ": " << mes[i].getMessage() << endl;
     }
+    cout << "=============================================" << endl;
     userMenu();
 }
 
 void writeMessage()
 {
-
     string to;
     string sms;
     bool test = false;

@@ -5,16 +5,16 @@ using namespace std;
 int main()
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	char choice = 'null';
-	while (choice != 'q')
+	int choice = 0;
+	while (true)
 	{
 		SetConsoleTextAttribute(hConsole, 11);
 		cout << "Welcome to chat" << endl;
 		cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << endl;
-		cin >> choice;
-		switch (choice)
+		choice = _getche();
+		cout << endl;
+		if (choice == 115)
 		{
-		case 's':
 			try
 			{
 				signUp();
@@ -22,24 +22,25 @@ int main()
 				{
 					userMenu();
 				}
-			}			
-			catch (const char* ex)            
+			}
+			catch (const char* ex)
 			{
 				cout << ex << endl;
-			}
-			break;
-		case 'r':
+			}		
+		}
+		if (choice == 114)
+		{
 			try { reg(); }
 			catch (const char* ex)
 			{
 				cout << ex << endl;
 			}
-			break;
-		case 'q':
-			break;
 		}
+		if (choice == 113)
+		{
+			break;
+		}		
 		cout << "\n============================================\n";
-	}
-	
+	}	
 	return 0;
 }
