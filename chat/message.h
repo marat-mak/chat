@@ -2,22 +2,21 @@
 #include <string>
 #include <iostream>
 
-//using namespace std;
 
 class Message
 {
 private:
-	string _from;
-	string _to;
-	string _message;
+	std::string _from;
+	std::string _to;
+	std::string _message;
 public:
 	Message() = default;
-	Message(string from, string to, string message);
+	Message(std::string from, std::string to, std::string message);
 	~Message() = default;
 	void show();
-	string getFrom();
-	string getTo();
-	string getMessage();
-	friend ostream& operator<<(ostream& output, const Message& u);
+	std::string getFrom();
+	std::string getTo();
+	std::string getMessage();
+	friend std::ostream& operator<<(std::ostream& output, const Message& u);
 };
 

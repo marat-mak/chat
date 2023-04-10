@@ -32,7 +32,7 @@
     <ClInclude Include="container.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="chatEngine.h">
+    <ClInclude Include="chat.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="message.h">

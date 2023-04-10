@@ -1,16 +1,16 @@
 #pragma once
 
 #include <stdlib.h>
-#include "container.h"
+#include <vector>
 #include "user.h"
 #include "message.h"
 #include <conio.h>
 #include <windows.h>
 #include <stdio.h>
 #include <cstdlib>
+//#include "container.h"
 
-
-string currentUser;
+std::string currentUser;
 
 
 void readMessage();
@@ -18,27 +18,27 @@ void writeMessage();
 void userMenu();
 void showUsers();
 
-Container<User> users;
-Container<Message> mes;
+std::vector<User> users;
+std::vector<Message> mes;
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 
 void reg()
 {
-    string name;
-    string login;
-    string password;
+    std::string name;
+    std::string login;
+    std::string password;
 
     SetConsoleTextAttribute(hConsole, 11);
     std::cout << "Enter username:" << std::endl;
     std::cin >> name;
-    for (int i = 0; i < users.getSize(); i++)
+    for (int i = 0; i < users.size(); i++)
     {
         if (users[i].getName() == name) throw "name is busy";
     }
     std::cout << "Enter login:" << std::endl;
     std::cin >> login;
-    for (int i = 0; i < users.getSize(); i++)
+    for (int i = 0; i < users.size(); i++)
     {
         if (users[i].getLogin() == login) throw "login is busy";
     }
@@ -62,7 +62,7 @@ void reg()
             }
             else
             {
-                users.addItem(User(name, login, password));
+                users.emplace_back(name, login, password);
                 std::cout << "\nUser " << name << " registered" << std::endl;
                 password.clear();
                 break;
@@ -93,9 +93,9 @@ void reg()
 
 bool signUp()
 {
-    string name;
-    string login;
-    string password;
+    std::string name;
+    std::string login;
+    std::string password;
 
     SetConsoleTextAttribute(hConsole, 13);
     std::cout << "Enter login:" << std::endl;
@@ -108,7 +108,7 @@ bool signUp()
         ch = _getch();
         if (ch == 13)
         {
-            for (int i = 0; i < users.getSize(); ++i)
+            for (int i = 0; i < users.size(); ++i)
             {
                 if (users[i].getLogin() == login && users[i].getPassword() == password)
                 {
@@ -178,7 +178,7 @@ void userMenu()
 void readMessage()
 {
     std::cout << "=============================================" << std::endl;
-    for (int i = 0; i < mes.getSize(); i++)
+    for (int i = 0; i < mes.size(); i++)
     {
         if (mes[i].getTo() == currentUser || mes[i].getTo() == "all" || mes[i].getFrom() == currentUser)
         {
@@ -193,14 +193,14 @@ void readMessage()
 
 void writeMessage()
 {
-    string to;
-    string sms;
+    std::string to;
+    std::string sms;
     bool test = false;
     SetConsoleTextAttribute(hConsole, 7);
     std::cout << "to whom(write 'all' for all): ";
     std::cin >> to;
     std::cin.ignore();
-    for (int i = 0; i < users.getSize(); i++)
+    for (int i = 0; i < users.size(); i++)
     {
         if (users[i].getName() == to || to == "all")
         {
@@ -211,7 +211,7 @@ void writeMessage()
     if (test == false) throw "no user in base";
     std::cout << "enter message: ";
     getline(std::cin, sms);
-    mes.addItem(Message(currentUser, to, sms));
+    mes.emplace_back(currentUser, to, sms);
     userMenu();
 }
 
@@ -219,7 +219,7 @@ void showUsers()
 {
     SetConsoleTextAttribute(hConsole, 11);
     std::cout << "=============================================" << std::endl;
-    for (int i = 0; i < users.getSize(); i++)
+    for (int i = 0; i < users.size(); i++)
     {
         std::cout << i + 1 << ". " << users[i].getName() << std::endl;
     }

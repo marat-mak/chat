@@ -1,22 +1,21 @@
 #pragma once
 #include <string>
 #include <iostream>
-//using namespace std;
 
 
 class User
 {
 private:
-	string _name;
-	string _login;
-	string _password;
+	std::string _name;
+	std::string _login;
+	std::string _password;
 public:
 	User() = default;
-	User(string name, string login, string password);
+	User(std::string name, std::string login, std::string password);
 	~User() = default;
 	void show();                                           //видимо уже не нужно
-	string getName();
-	string getLogin();
-	string getPassword();
-	friend ostream& operator<<(ostream& output, const User& u);
+	std::string getName();
+	std::string getLogin();
+	std::string getPassword();
+	friend std::ostream& operator<<(std::ostream& output, const User& u);
 };
