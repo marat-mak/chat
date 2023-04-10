@@ -1,5 +1,5 @@
 #include "chatEngine.h"
-using namespace std;
+//using namespace std;
 
 
 int main()
@@ -9,10 +9,10 @@ int main()
 	while (true)
 	{
 		SetConsoleTextAttribute(hConsole, 11);
-		cout << "Welcome to chat" << endl;
-		cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << endl;
+		std::cout << "Welcome to chat" << std::endl;
+		std::cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << std::endl;
 		choice = _getche();
-		cout << endl;
+		std::cout << std::endl;
 		if (choice == 115)
 		{
 			try
@@ -25,7 +25,7 @@ int main()
 			}
 			catch (const char* ex)
 			{
-				cout << ex << endl;
+				std::cout << ex << std::endl;
 			}		
 		}
 		if (choice == 114)
@@ -33,14 +33,14 @@ int main()
 			try { reg(); }
 			catch (const char* ex)
 			{
-				cout << ex << endl;
+				std::cout << ex << std::endl;
 			}
 		}
 		if (choice == 113)
 		{
 			break;
 		}		
-		cout << "\n============================================\n";
+		std::cout << "\n============================================\n";
 	}	
 	return 0;
 }

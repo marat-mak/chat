@@ -30,19 +30,19 @@ void reg()
     string password;
 
     SetConsoleTextAttribute(hConsole, 11);
-    cout << "Enter username:" << endl;
-    cin >> name;
+    std::cout << "Enter username:" << std::endl;
+    std::cin >> name;
     for (int i = 0; i < users.getSize(); i++)
     {
         if (users[i].getName() == name) throw "name is busy";
     }
-    cout << "Enter login:" << endl;
-    cin >> login;
+    std::cout << "Enter login:" << std::endl;
+    std::cin >> login;
     for (int i = 0; i < users.getSize(); i++)
     {
         if (users[i].getLogin() == login) throw "login is busy";
     }
-    cout << "Enter password (min 6 characters): " << endl;
+    std::cout << "Enter password (min 6 characters): " << std::endl;
     int ch = 0;
     while (true)
     {
@@ -52,18 +52,18 @@ void reg()
             if (password.length() <= 5)
             {
                 SetConsoleTextAttribute(hConsole, 12);
-                cout << endl;
-                cout << "the password is too short" << endl << endl;
-                cout << "please try again" << endl << endl;
-                cout << "press ESC to cancel" << endl << endl;
-                cout << "Enter password (min 6 characters): " << endl;
+                std::cout << std::endl;
+                std::cout << "the password is too short" << std::endl << std::endl;
+                std::cout << "please try again" << std::endl << std::endl;
+                std::cout << "press ESC to cancel" << std::endl << std::endl;
+                std::cout << "Enter password (min 6 characters): " << std::endl;
                 password.clear();
                 continue;
             }
             else
             {
                 users.addItem(User(name, login, password));
-                cout << "\nUser " << name << " registered" << endl;
+                std::cout << "\nUser " << name << " registered" << std::endl;
                 password.clear();
                 break;
             }
@@ -71,7 +71,7 @@ void reg()
 
         if (ch == 8)
         {
-            cout << (char)8 << ' ' << char(8);
+            std::cout << (char)8 << ' ' << char(8);
 
             if (!password.empty())
             {
@@ -80,7 +80,7 @@ void reg()
         }
         else
         {
-            cout << '*';// Замена символов на *
+            std::cout << '*';// Замена символов на *
             password += (char)ch;
             // Преврашение кода из целого числа в символ.
         }
@@ -98,11 +98,11 @@ bool signUp()
     string password;
 
     SetConsoleTextAttribute(hConsole, 13);
-    cout << "Enter login:" << endl;
-    cin >> login;
-    cout << "Enter password: ";
+    std::cout << "Enter login:" << std::endl;
+    std::cin >> login;
+    std::cout << "Enter password: ";
     int ch = 0;
-    cout << endl;
+    std::cout << std::endl;
     while (true)
     {
         ch = _getch();
@@ -113,13 +113,13 @@ bool signUp()
                 if (users[i].getLogin() == login && users[i].getPassword() == password)
                 {
                     system("cls");
-                    cout << "Login correct! Hello " << users[i].getName() << endl;
+                    std::cout << "Login correct! Hello " << users[i].getName() << std::endl;
                     currentUser = users[i].getName();
                     return true;
                     break;
                 }
             }
-            cout << endl;
+            std::cout << std::endl;
             throw "incorrect login or password";
 
         }
@@ -127,7 +127,7 @@ bool signUp()
         if (ch == 8)
         {
 
-            cout << (char)8 << ' ' << char(8);
+            std::cout << (char)8 << ' ' << char(8);
 
 
             if (!password.empty())
@@ -137,7 +137,7 @@ bool signUp()
         }
         else
         {
-            cout << '*';// Замена символов на *
+            std::cout << '*';// Замена символов на *
             password += (char)ch;
             // Преврашение кода из целого числа в символ.
         }
@@ -148,10 +148,10 @@ bool signUp()
 void userMenu()
 {
     SetConsoleTextAttribute(hConsole, 14);
-    cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << endl;
+    std::cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << std::endl;
     int ch = 0;
     ch = _getche();
-    cout << endl;
+    std::cout << std::endl;
     if (ch == 114)
     {
         readMessage();
@@ -161,7 +161,7 @@ void userMenu()
         try { writeMessage(); }
         catch (const char* ex)
         {
-            cout << ex << endl;
+            std::cout << ex << std::endl;
             userMenu();
         }
     }
@@ -177,17 +177,17 @@ void userMenu()
 
 void readMessage()
 {
-    cout << "=============================================" << endl;
+    std::cout << "=============================================" << std::endl;
     for (int i = 0; i < mes.getSize(); i++)
     {
         if (mes[i].getTo() == currentUser || mes[i].getTo() == "all" || mes[i].getFrom() == currentUser)
         {
-            if(mes[i].getFrom() == currentUser)  cout << "You: -> " << mes[i].getMessage() << endl;
+            if(mes[i].getFrom() == currentUser)  std::cout << "You: -> " << mes[i].getMessage() << std::endl;
         
-            else cout << mes[i].getFrom() << ": " << mes[i].getMessage() << endl;
+            else std::cout << mes[i].getFrom() << ": " << mes[i].getMessage() << std::endl;
         }
     }
-    cout << "=============================================" << endl;
+    std::cout << "=============================================" << std::endl;
     userMenu();
 }
 
@@ -197,9 +197,9 @@ void writeMessage()
     string sms;
     bool test = false;
     SetConsoleTextAttribute(hConsole, 7);
-    cout << "to whom(write 'all' for all): ";
-    cin >> to;
-    cin.ignore();
+    std::cout << "to whom(write 'all' for all): ";
+    std::cin >> to;
+    std::cin.ignore();
     for (int i = 0; i < users.getSize(); i++)
     {
         if (users[i].getName() == to || to == "all")
@@ -209,8 +209,8 @@ void writeMessage()
         }
     }
     if (test == false) throw "no user in base";
-    cout << "enter message: ";
-    getline(cin, sms);
+    std::cout << "enter message: ";
+    getline(std::cin, sms);
     mes.addItem(Message(currentUser, to, sms));
     userMenu();
 }
@@ -218,11 +218,11 @@ void writeMessage()
 void showUsers()
 {
     SetConsoleTextAttribute(hConsole, 11);
-    cout << "=============================================" << endl;
+    std::cout << "=============================================" << std::endl;
     for (int i = 0; i < users.getSize(); i++)
     {
-        cout << i + 1 << ". " << users[i].getName() << endl;
+        std::cout << i + 1 << ". " << users[i].getName() << std::endl;
     }
-    cout << "=============================================" << endl;
+    std::cout << "=============================================" << std::endl;
     userMenu();
 }

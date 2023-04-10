@@ -5,7 +5,7 @@ Message::Message(string from, string to, string message) :_from(from), _to(to), 
 
 void Message::show()
 {
-	cout << _from << " " << _message;
+	std::cout << _from << " " << _message;
 }
 
 string Message::getFrom()
@@ -25,6 +25,6 @@ string Message::getMessage()
 
 ostream& operator<<(ostream& output, const Message& m)
 {
-	output << m._from << " " << m._message << endl;
+	output << m._from << " " << m._message << std::endl;
 	return output;
 	}

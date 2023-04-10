@@ -6,7 +6,7 @@ User::User(string name, string login, string password) : _name(name), _login(log
 }
 void User::show()                                              
 {
-    cout << _name << " " << _login << " " << _password << endl;
+    std::cout << _name << " " << _login << " " << _password << std::endl;
 }
 string User::getName()
 {
