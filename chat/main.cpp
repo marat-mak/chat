@@ -15,9 +15,8 @@ int main()
 		if (choice == 115)
 		{
 			try
-			{
-				signUp();
-				if (signUp)
+			{				
+				if (signUp())
 				{
 					userMenu();
 				}
