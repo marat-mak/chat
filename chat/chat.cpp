@@ -1,16 +1,18 @@
 #include "chat.h"
+#include "mygetch.h"
 
 std::string currentUser;
 std::vector<User> users;
 std::vector<Message> mes;
-HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void reg()
 {
     std::string name;
     std::string login;
     std::string password;
 
-    SetConsoleTextAttribute(hConsole, 11);
+    //SetConsoleTextAttribute(hConsole, 11);
+    printf("\x1b[36m");
     std::cout << "Enter username:" << std::endl;
     std::cin >> name;
     for (int i = 0; i < users.size(); i++)
@@ -19,6 +21,7 @@ void reg()
     }
     std::cout << "Enter login:" << std::endl;
     std::cin >> login;
+    std::cin.ignore();
     for (int i = 0; i < users.size(); i++)
     {
         if (users[i].getLogin() == login) throw "login is busy";
@@ -27,12 +30,13 @@ void reg()
     int ch = 0;
     while (true)
     {
-        ch = _getch();
-        if (ch == 13)
+        ch = mygetch();
+        if (ch == 10)
         {
             if (password.length() <= 5)
             {
-                SetConsoleTextAttribute(hConsole, 12);
+                //SetConsoleTextAttribute(hConsole, 12);
+    		printf("\x1b[31m");
                 std::cout << std::endl;
                 std::cout << "the password is too short" << std::endl << std::endl;
                 std::cout << "please try again" << std::endl << std::endl;
@@ -78,22 +82,25 @@ bool signUp()
     std::string login;
     std::string password;
 
-    SetConsoleTextAttribute(hConsole, 13);
+    //SetConsoleTextAttribute(hConsole, 13);
+    printf("\x1b[35m");
     std::cout << "Enter login:" << std::endl;
     std::cin >> login;
+    std::cin.ignore();
     std::cout << "Enter password: ";
     int ch = 0;
     std::cout << std::endl;
     while (true)
     {
-        ch = _getch();
-        if (ch == 13)
+        ch = mygetch();
+        if (ch == 10)
         {
             for (int i = 0; i < users.size(); ++i)
             {
                 if (users[i].getLogin() == login && users[i].getPassword() == password)
                 {
-                    system("cls");
+                    //system("cls");
+		    printf("\033c");
                     std::cout << "Login correct! Hello " << users[i].getName() << std::endl;
                     currentUser = users[i].getName();
                     return true;
@@ -128,10 +135,11 @@ bool signUp()
 
 void userMenu()
 {
-    SetConsoleTextAttribute(hConsole, 14);
+    //SetConsoleTextAttribute(hConsole, 14);
+    printf("\x1b[33m");
     std::cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << std::endl;
     int ch = 0;
-    ch = _getche();
+    ch = mygetch();
     std::cout << std::endl;
     if (ch == 114)
     {
@@ -177,7 +185,8 @@ void writeMessage()
     std::string to;
     std::string sms;
     bool test = false;
-    SetConsoleTextAttribute(hConsole, 7);
+    //SetConsoleTextAttribute(hConsole, 7);
+    printf("\x1b[37m");
     std::cout << "to whom(write 'all' for all): ";
     std::cin >> to;
     std::cin.ignore();
@@ -198,7 +207,8 @@ void writeMessage()
 
 void showUsers()
 {
-    SetConsoleTextAttribute(hConsole, 11);
+    //SetConsoleTextAttribute(hConsole, 11);
+    printf("\x1b[36m");
     std::cout << "=============================================" << std::endl;
     for (int i = 0; i < users.size(); i++)
     {
