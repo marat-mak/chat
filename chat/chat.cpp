@@ -1,18 +1,29 @@
 #include "chat.h"
 #include "mygetch.h"
 #include <fstream>
+#include <filesystem>
 
 std::string currentUser;
 std::vector<User> users;
 std::vector<Message> mes;
+
 void reg()
 {
-    std::fstream user_file("users.list", std::ios::out | std::ios::in | std::ios::app);
-    
-    std::string name;
+    std::fstream user_file("users.list", std::ios::out | std::ios::in |
+std::ios::app);
+
+    auto permissions = std::filesystem::perms::group_all |
+std::filesystem::perms::others_all;
+
+    std::filesystem::permissions("users.list", permissions,
+std::filesystem::perm_options::remove);
+ 
+ std::string name;
     std::string login;
     std::string password;
 
+  
+       
     printf("\x1b[36m");
     std::cout << "Enter username:" << std::endl;
     std::cin >> name;
@@ -47,9 +58,11 @@ void reg()
             }
             else
             {
-                //users.emplace_back(name, login, password);
-                user_file << users.emplace_back(name, login, password) << "\n";
-                std::cout << "\nUser " << name << " registered" << std::endl;
+                users.emplace_back(name, login, password);
+                user_file << "name:" << name << "\n";
+                user_file << "login:" << login << "\n";
+                user_file << "pass:" << password << "\n";
+	       	std::cout << "\nUser " << name << " registered" << std::endl;
                 password.clear();
                 break;
             }
@@ -66,24 +79,52 @@ void reg()
         }
         else
         {
-            std::cout << '*';// Замена символов на *
+            std::cout << '*';
             password += (char)ch;
-            // Преврашение кода из целого числа в символ.
         }
         if (ch == 27)
         {
             break;
         }
     }
+    
 }
 
+/*void loadUsers() {
+    if (user_file.is_open()) {
+        const std::string delimiter = ":"; 
+        std::string line;
+        std::string type;
+        std::string value;
+
+        while (std::getline(user_file, line)) {
+            size_t delimiterPosition = line.find(delimiter);
+            if (delimiterPosition > 0) {
+                name = line.substr(0, delimiterPosition);
+                value = line.substr(delimiterPosition + 1);
+
+                if (type == "name") {
+                    name = value;
+                }
+                else if (type == "login") {
+                    login = value;
+                }
+		else if (type == "pass") {
+                    password = value;
+                }
+		users.emplace_back(name, login, password);
+            }
+        }
+    }
+    user_file.close();
+}
+*/
 bool signUp()
 {
     std::string name;
     std::string login;
     std::string password;
 
-    //SetConsoleTextAttribute(hConsole, 13);
     printf("\x1b[35m");
     std::cout << "Enter login:" << std::endl;
     std::cin >> login;
@@ -100,7 +141,6 @@ bool signUp()
             {
                 if (users[i].getLogin() == login && users[i].getPassword() == password)
                 {
-                    //system("cls");
 		    printf("\033c");
                     std::cout << "Login correct! Hello " << users[i].getName() << std::endl;
                     currentUser = users[i].getName();
@@ -115,20 +155,14 @@ bool signUp()
 
         if (ch == 8)
         {
-
             std::cout << (char)8 << ' ' << char(8);
-
-
             if (!password.empty())
-
                 password.erase(password.length() - 1);
-
         }
         else
         {
-            std::cout << '*';// Замена символов на *
+            std::cout << '*';
             password += (char)ch;
-            // Преврашение кода из целого числа в символ.
         }
 
     }
@@ -136,7 +170,6 @@ bool signUp()
 
 void userMenu()
 {
-    //SetConsoleTextAttribute(hConsole, 14);
     printf("\x1b[33m");
     std::cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << std::endl;
     int ch = 0;
@@ -183,11 +216,18 @@ void readMessage()
 
 void writeMessage()
 {
-    std::fstream mes_file("messages.list", std::ios::out | std::ios::in | std::ios::app);
+    std::fstream mes_file("messages.list", std::ios::out | std::ios::in |
+std::ios::app);
+    
+    auto permissions = std::filesystem::perms::group_all |
+std::filesystem::perms::others_all;
+    
+    std::filesystem::permissions("messages.list", permissions,
+std::filesystem::perm_options::remove);
+    
     std::string to;
     std::string sms;
     bool test = false;
-    //SetConsoleTextAttribute(hConsole, 7);
     printf("\x1b[37m");
     std::cout << "to whom(write 'all' for all): ";
     std::cin >> to;
@@ -203,14 +243,15 @@ void writeMessage()
     if (test == false) throw "no user in base";
     std::cout << "enter message: ";
     getline(std::cin, sms);
-    mes_file << mes.emplace_back(currentUser, to, sms) << "\n";
-    //mes_file << users.emplace_back(name, login, password) << "\n";
+    mes.emplace_back(currentUser, to, sms);
+    mes_file << "from:" << currentUser << "\n";
+    mes_file << "to:" << to << "\n";
+    mes_file << "sms:" << sms << "\n";
     userMenu();
 }
 
 void showUsers()
 {
-    //SetConsoleTextAttribute(hConsole, 11);
     printf("\x1b[36m");
     std::cout << "=============================================" << std::endl;
     for (int i = 0; i < users.size(); i++)

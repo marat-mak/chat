@@ -8,12 +8,11 @@ private:
 	std::string _name;
 	std::string _login;
 	std::string _password;
-	//void writeFile(User);
 public:
 	User() = default;
 	User(std::string name, std::string login, std::string password);
 	~User() = default;
-	void show();                                           //видимо уже не нужно
+	void show();
 	std::string getName();
 	std::string getLogin();
 	std::string getPassword();
