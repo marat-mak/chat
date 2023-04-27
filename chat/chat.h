@@ -21,4 +21,4 @@ void writeMessage();
 
 void showUsers();
 
-//void loadUsers();
+void loadUsers();

@@ -6,22 +6,21 @@
 std::string currentUser;
 std::vector<User> users;
 std::vector<Message> mes;
+ 
+ std::string name;
+    std::string login;
+    std::string password;
+
 
 void reg()
 {
-    std::fstream user_file("users.list", std::ios::out | std::ios::in |
-std::ios::app);
+    std::fstream user_file("users.list", std::ios::out | std::ios::app);
 
     auto permissions = std::filesystem::perms::group_all |
 std::filesystem::perms::others_all;
 
     std::filesystem::permissions("users.list", permissions,
 std::filesystem::perm_options::remove);
- 
- std::string name;
-    std::string login;
-    std::string password;
-
   
        
     printf("\x1b[36m");
@@ -62,6 +61,7 @@ std::filesystem::perm_options::remove);
                 user_file << "name:" << name << "\n";
                 user_file << "login:" << login << "\n";
                 user_file << "pass:" << password << "\n";
+		user_file.close();
 	       	std::cout << "\nUser " << name << " registered" << std::endl;
                 password.clear();
                 break;
@@ -90,35 +90,6 @@ std::filesystem::perm_options::remove);
     
 }
 
-/*void loadUsers() {
-    if (user_file.is_open()) {
-        const std::string delimiter = ":"; 
-        std::string line;
-        std::string type;
-        std::string value;
-
-        while (std::getline(user_file, line)) {
-            size_t delimiterPosition = line.find(delimiter);
-            if (delimiterPosition > 0) {
-                name = line.substr(0, delimiterPosition);
-                value = line.substr(delimiterPosition + 1);
-
-                if (type == "name") {
-                    name = value;
-                }
-                else if (type == "login") {
-                    login = value;
-                }
-		else if (type == "pass") {
-                    password = value;
-                }
-		users.emplace_back(name, login, password);
-            }
-        }
-    }
-    user_file.close();
-}
-*/
 bool signUp()
 {
     std::string name;
@@ -256,8 +227,40 @@ void showUsers()
     std::cout << "=============================================" << std::endl;
     for (int i = 0; i < users.size(); i++)
     {
-        std::cout << i + 1 << ". " << users[i].getName() << std::endl;
+        std::cout << i + 1 << ". " << users[i].getName() << "\n";
     }
     std::cout << "=============================================" << std::endl;
     userMenu();
 }
+
+void loadUsers() {
+    std::fstream user_file("users.list", std::ios::in);
+    if (user_file.is_open()) {
+        const std::string delimiter = ":"; 
+        std::string line;
+        std::string type;
+        std::string value;
+
+        while (std::getline(user_file, line)) {
+            size_t delimiterPosition = line.find(delimiter);
+            if (delimiterPosition > 0) {
+                type = line.substr(0, delimiterPosition);
+                value = line.substr(delimiterPosition + 1);
+
+                if (type == "name") {
+                    name = value;
+                }
+                else if (type == "login") {
+                    login = value;
+                }
+		else if (type == "pass") {
+                    password = value;
+                    users.emplace_back(name, login, password);
+                }
+            }
+        }
+    }
+    user_file.close();
+}
+
+

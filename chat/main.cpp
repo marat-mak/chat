@@ -3,7 +3,7 @@
 
 int main()
 {
-	//loadUsers();
+	loadUsers();
 	int choice = 0;
 	while (true)
 	{
