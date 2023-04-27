@@ -2,13 +2,13 @@
 #include <string>
 #include <iostream>
 
-
 class User
 {
 private:
 	std::string _name;
 	std::string _login;
 	std::string _password;
+	//void writeFile(User);
 public:
 	User() = default;
 	User(std::string name, std::string login, std::string password);
@@ -19,3 +19,4 @@ public:
 	std::string getPassword();
 	friend std::ostream& operator<<(std::ostream& output, const User& u);
 };
+

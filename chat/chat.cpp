@@ -1,17 +1,18 @@
 #include "chat.h"
 #include "mygetch.h"
+#include <fstream>
 
 std::string currentUser;
 std::vector<User> users;
 std::vector<Message> mes;
-//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void reg()
 {
+    std::fstream user_file("users.list", std::ios::out | std::ios::in | std::ios::app);
+    
     std::string name;
     std::string login;
     std::string password;
 
-    //SetConsoleTextAttribute(hConsole, 11);
     printf("\x1b[36m");
     std::cout << "Enter username:" << std::endl;
     std::cin >> name;
@@ -35,7 +36,6 @@ void reg()
         {
             if (password.length() <= 5)
             {
-                //SetConsoleTextAttribute(hConsole, 12);
     		printf("\x1b[31m");
                 std::cout << std::endl;
                 std::cout << "the password is too short" << std::endl << std::endl;
@@ -47,7 +47,8 @@ void reg()
             }
             else
             {
-                users.emplace_back(name, login, password);
+                //users.emplace_back(name, login, password);
+                user_file << users.emplace_back(name, login, password) << "\n";
                 std::cout << "\nUser " << name << " registered" << std::endl;
                 password.clear();
                 break;
@@ -182,6 +183,7 @@ void readMessage()
 
 void writeMessage()
 {
+    std::fstream mes_file("messages.list", std::ios::out | std::ios::in | std::ios::app);
     std::string to;
     std::string sms;
     bool test = false;
@@ -201,7 +203,8 @@ void writeMessage()
     if (test == false) throw "no user in base";
     std::cout << "enter message: ";
     getline(std::cin, sms);
-    mes.emplace_back(currentUser, to, sms);
+    mes_file << mes.emplace_back(currentUser, to, sms) << "\n";
+    //mes_file << users.emplace_back(name, login, password) << "\n";
     userMenu();
 }
 

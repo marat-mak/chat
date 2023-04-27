@@ -3,11 +3,9 @@
 
 int main()
 {
-//	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	int choice = 0;
 	while (true)
 	{
-//		SetConsoleTextAttribute(hConsole, 11);
 		printf("\x1b[36m");
 		std::cout << "Welcome to chat" << std::endl;
 		std::cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << std::endl;

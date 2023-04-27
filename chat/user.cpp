@@ -25,3 +25,4 @@ std::ostream& operator<<(std::ostream& output, const User& u)
     output << u._name << " " << u._login << " " << u._password;
     return output;
 }
+
