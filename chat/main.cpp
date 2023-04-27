@@ -4,6 +4,7 @@
 int main()
 {
 	loadUsers();
+	loadMessages();
 	int choice = 0;
 	while (true)
 	{

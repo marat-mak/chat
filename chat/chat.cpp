@@ -8,10 +8,12 @@ std::vector<User> users;
 std::vector<Message> mes;
  
  std::string name;
-    std::string login;
-    std::string password;
+ std::string login;
+ std::string password;
 
-
+std::string to;
+std::string sms;
+ 
 void reg()
 {
     std::fstream user_file("users.list", std::ios::out | std::ios::app);
@@ -196,9 +198,7 @@ std::filesystem::perms::others_all;
     std::filesystem::permissions("messages.list", permissions,
 std::filesystem::perm_options::remove);
     
-    std::string to;
-    std::string sms;
-    bool test = false;
+   bool test = false;
     printf("\x1b[37m");
     std::cout << "to whom(write 'all' for all): ";
     std::cin >> to;
@@ -256,6 +256,8 @@ void loadUsers() {
 		else if (type == "pass") {
                     password = value;
                     users.emplace_back(name, login, password);
+                    password.clear();
+
                 }
             }
         }
@@ -263,4 +265,32 @@ void loadUsers() {
     user_file.close();
 }
 
+void loadMessages() {
+    std::fstream user_file("messages.list", std::ios::in);
+    if (user_file.is_open()) {
+        const std::string delimiter = ":"; 
+        std::string line;
+        std::string type;
+        std::string value;
 
+        while (std::getline(user_file, line)) {
+            size_t delimiterPosition = line.find(delimiter);
+            if (delimiterPosition > 0) {
+                type = line.substr(0, delimiterPosition);
+                value = line.substr(delimiterPosition + 1);
+
+                if (type == "from") {
+                    currentUser = value;
+                }
+                else if (type == "to") {
+                    to = value;
+                }
+		else if (type == "sms") {
+                    sms = value;
+                    mes.emplace_back(currentUser, to, sms);
+                }
+            }
+        }
+    }
+    user_file.close();
+}
