@@ -7,9 +7,9 @@ std::string currentUser;
 std::vector<User> users;
 std::vector<Message> mes;
  
- std::string name;
- std::string login;
- std::string password;
+std::string name;
+std::string login;
+std::string password;
 
 std::string to;
 std::string sms;
@@ -189,8 +189,7 @@ void readMessage()
 
 void writeMessage()
 {
-    std::fstream mes_file("messages.list", std::ios::out | std::ios::in |
-std::ios::app);
+    std::fstream mes_file("messages.list", std::ios::out | std::ios::app);
     
     auto permissions = std::filesystem::perms::group_all |
 std::filesystem::perms::others_all;
@@ -218,6 +217,7 @@ std::filesystem::perm_options::remove);
     mes_file << "from:" << currentUser << "\n";
     mes_file << "to:" << to << "\n";
     mes_file << "sms:" << sms << "\n";
+    mes_file.close();
     userMenu();
 }
 
@@ -266,14 +266,14 @@ void loadUsers() {
 }
 
 void loadMessages() {
-    std::fstream user_file("messages.list", std::ios::in);
-    if (user_file.is_open()) {
+    std::fstream mes_file("messages.list", std::ios::in);
+    if (mes_file.is_open()) {
         const std::string delimiter = ":"; 
         std::string line;
         std::string type;
         std::string value;
 
-        while (std::getline(user_file, line)) {
+        while (std::getline(mes_file, line)) {
             size_t delimiterPosition = line.find(delimiter);
             if (delimiterPosition > 0) {
                 type = line.substr(0, delimiterPosition);
@@ -292,5 +292,5 @@ void loadMessages() {
             }
         }
     }
-    user_file.close();
+    mes_file.close();
 }
