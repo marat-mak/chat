@@ -1,7 +1,7 @@
 #include "message.h"
 
 
-Message::Message(std::string from, std::string to, std::string message) :_from(from), _to(to), _message(message) {}
+Message::Message(std::string& from, std::string& to, std::string& message) :_from(from), _to(to), _message(message) {}
 
 void Message::show()
 {
