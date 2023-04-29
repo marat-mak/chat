@@ -10,7 +10,7 @@ private:
 	std::string _password;
 public:
 	User() = default;
-	User(std::string name, std::string login, std::string password);
+	User(std::string& name, std::string& login, std::string& password);
 	~User() = default;
 	void show();
 	std::string getName();
