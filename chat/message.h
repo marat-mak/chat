@@ -11,7 +11,7 @@ private:
 	std::string _message;
 public:
 	Message() = default;
-	Message(std::string from, std::string to, std::string message);
+	Message(std::string& from, std::string& to, std::string& message);
 	~Message() = default;
 	void show();
 	std::string getFrom();
