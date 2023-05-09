@@ -43,7 +43,7 @@ std::filesystem::perm_options::remove);
     while (true)
     {
         ch = _getch();
-        if (ch == 10)
+        if (ch == ENTER)
         {
             if (password.length() <= 5)
             {

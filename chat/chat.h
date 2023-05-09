@@ -9,8 +9,10 @@
 
 #if defined(__linux__)
 #include "mygetch.h"
+#define ENTER 10
 #else
 #include <conio.h>
+#define ENTER 13
 #endif
 
 
