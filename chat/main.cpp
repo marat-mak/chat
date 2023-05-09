@@ -1,5 +1,4 @@
 #include "chat.h"
-#include "mygetch.h"
 
 int main()
 {
@@ -11,7 +10,7 @@ int main()
 		printf("\x1b[36m");
 		std::cout << "Welcome to chat" << std::endl;
 		std::cout << "Press [s] - sign up; [r] - registry new user; [q] - quit" << std::endl;
-		choice = mygetch();
+		choice = _getch();
 		std::cout << std::endl;
 		if (choice == 115)
 		{

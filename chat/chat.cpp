@@ -1,5 +1,4 @@
 #include "chat.h"
-#include "mygetch.h"
 #include <fstream>
 #include <filesystem>
 
@@ -43,7 +42,7 @@ std::filesystem::perm_options::remove);
     int ch = 0;
     while (true)
     {
-        ch = mygetch();
+        ch = _getch();
         if (ch == 10)
         {
             if (password.length() <= 5)
@@ -107,7 +106,7 @@ bool signUp()
     std::cout << std::endl;
     while (true)
     {
-        ch = mygetch();
+        ch = _getch();
         if (ch == 10)
         {
             for (int i = 0; i < users.size(); ++i)
@@ -146,7 +145,7 @@ void userMenu()
     printf("\x1b[33m");
     std::cout << "Press [r] - read message; [w] - write message; [s] - show users; [any] - exit to main menu" << std::endl;
     int ch = 0;
-    ch = mygetch();
+    ch = _getch();
     std::cout << std::endl;
     if (ch == 114)
     {

@@ -2,4 +2,4 @@
 #include <termios.h>
 #include <unistd.h>
 
-int mygetch( );
+int _getch( );

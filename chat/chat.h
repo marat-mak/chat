@@ -7,6 +7,12 @@
 #include <stdio.h>
 #include <cstdlib>
 
+#if defined(__linux__)
+#include "mygetch.h"
+#else
+#include <conio.h>
+#endif
+
 
 
 void reg();
