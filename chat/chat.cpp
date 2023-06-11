@@ -107,7 +107,7 @@ bool signUp()
     while (true)
     {
         ch = _getch();
-        if (ch == 10)
+        if (ch == ENTER)
         {
             for (int i = 0; i < users.size(); ++i)
             {
