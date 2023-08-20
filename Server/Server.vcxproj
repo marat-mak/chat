@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{1301f3f7-263b-401b-a2e6-a231252287fe}</ProjectGuid>
-    <RootNamespace>chat</RootNamespace>
+    <ProjectGuid>{57bb7eb0-b49d-421f-bb0b-b3c8ff88f61a}</ProjectGuid>
+    <RootNamespace>Server</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -102,14 +102,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>STATIC_CONCPP;_DEBUG;_CONSOLE;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Common;$(SolutionDir)SDKs\MariaDB C++ Connector 64-bit\include\mariadb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)SDKs\MariaDB C++ Connector 64-bit;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,20 +130,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="chat.cpp" />
-    <ClCompile Include="ClientSocket.cpp" />
-    <ClCompile Include="CVarsSystem.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="message.cpp" />
-    <ClCompile Include="user.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="CoreServer.cpp" />
+    <ClCompile Include="CServer.cpp" />
+    <ClCompile Include="CVarSystem.cpp" />
+    <ClCompile Include="mysql_driver.cpp" />
+    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientSocket.h" />
-    <ClInclude Include="container.h" />
-    <ClInclude Include="CVarsSystem.h" />
-    <ClInclude Include="message.h" />
-    <ClInclude Include="chat.h" />
-    <ClInclude Include="user.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="CoreServer.h" />
+    <ClInclude Include="CServer.h" />
+    <ClInclude Include="CVarSystem.h" />
+    <ClInclude Include="mysql_driver.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

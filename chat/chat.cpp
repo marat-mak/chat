@@ -1,6 +1,16 @@
 #include "chat.h"
 #include <fstream>
 #include <filesystem>
+#include "ClientSocket.h"
+#include <map>
+#include "MessageManager.h"
+#include "Base64.h"
+
+#include <vector>
+#include <string>
+#include <sstream>
+#include <codecvt>
+
 
 std::string currentUser;
 std::vector<User> users;
@@ -12,32 +22,29 @@ std::string password;
 
 std::string to;
 std::string sms;
- 
-void reg()
+
+CSocket* pClientsLocal = nullptr;
+
+void reg(CSocket* pClient)
 {
-    std::fstream user_file("users.list", std::ios::out | std::ios::app);
+    /*std::fstream user_file("users.list", std::ios::out | std::ios::app);
 
     auto permissions = std::filesystem::perms::group_all |
 std::filesystem::perms::others_all;
 
     std::filesystem::permissions("users.list", permissions,
-std::filesystem::perm_options::remove);
-  
-       
+std::filesystem::perm_options::remove);*/
+    name = "";
+    login = "";
+    password = "";
+
+
     printf("\x1b[36m");
     std::cout << "Enter username:" << std::endl;
     std::cin >> name;
-    for (int i = 0; i < users.size(); i++)
-    {
-        if (users[i].getName() == name) throw "name is busy";
-    }
     std::cout << "Enter login:" << std::endl;
     std::cin >> login;
     std::cin.ignore();
-    for (int i = 0; i < users.size(); i++)
-    {
-        if (users[i].getLogin() == login) throw "login is busy";
-    }
     std::cout << "Enter password (min 6 characters): " << std::endl;
     int ch = 0;
     while (true)
@@ -58,14 +65,35 @@ std::filesystem::perm_options::remove);
             }
             else
             {
-                users.emplace_back(name, login, password);
+
+                std::string message = "page=register;login=" + login + ";password=" + password + ";userName=" + name + ";";
+                pClient->SMessage(message);
+
+                std::string result = pClient->RMessage();
+
+                std::map<std::string, std::string> read_result = MessageManager::parseKeyValueString(result);
+                if (read_result["status"] != "ok")
+                {
+                    std::string print_message = base64_decode(read_result["message"]);
+                    std::cout << print_message << std::endl;
+                    reg(pClient);
+                    break;
+                }
+                else
+                {
+                    std::cout << "Register Success\n";
+                    break;
+                }
+
+                /*users.emplace_back(name, login, password);
                 user_file << "name:" << name << "\n";
                 user_file << "login:" << login << "\n";
                 user_file << "pass:" << password << "\n";
 		user_file.close();
 	       	std::cout << "\nUser " << name << " registered" << std::endl;
-                password.clear();
-                break;
+                password.clear();*/
+
+                
             }
         }
 
@@ -91,7 +119,7 @@ std::filesystem::perm_options::remove);
     
 }
 
-bool signUp()
+bool signUp(CSocket* pClient)
 {
     std::string name;
     std::string login;
@@ -109,7 +137,7 @@ bool signUp()
         ch = _getch();
         if (ch == ENTER)
         {
-            for (int i = 0; i < users.size(); ++i)
+            /*for (int i = 0; i < users.size(); ++i)
             {
                 if (users[i].getLogin() == login && users[i].getPassword() == password)
                 {
@@ -119,9 +147,47 @@ bool signUp()
                     return true;
                     break;
                 }
+            }*/
+
+            std::string message = "page=autch;login=" + login + ";password=" + password + ";";
+            pClient->SMessage(message);
+
+            std::string rec = pClient->RMessage();
+            std::map<std::string, std::string> pMessageManager = MessageManager::parseKeyValueString(rec);
+
+            if (pMessageManager["page"] == "autch")
+            {
+                std::string status = pMessageManager["status"];
+
+                if (status == "ok")
+                {
+                    std::string login = pMessageManager["login"];
+                    std::string pass = pMessageManager["password"];
+                    std::string name = pMessageManager["username"];
+                    int id = atoi(pMessageManager["id"].c_str() );
+                    std::cout << "Login correct! Hello " << name << std::endl;
+                    pClient->login = login;
+                    pClient->password = pass;
+                    pClient->nickname = name;
+                    pClient->id = id;
+
+
+                    currentUser = login;
+                    pClientsLocal = pClient;
+                    return true;
+
+                }
+                else
+                {
+
+                    std::cout << std::endl;
+                    throw "incorrect login or password";
+                }
+
             }
-            std::cout << std::endl;
-            throw "incorrect login or password";
+
+
+
 
         }
 
@@ -170,25 +236,93 @@ void userMenu()
     }
 }
 
+std::string decodeUtf8(const std::string& input) {
+    int wideStrLen = MultiByteToWideChar(CP_UTF8, 0, input.c_str(), -1, nullptr, 0);
+    if (wideStrLen == 0) {
+        return "";
+    }
+
+    std::wstring wideStr(wideStrLen, L'\0');
+    MultiByteToWideChar(CP_UTF8, 0, input.c_str(), -1, &wideStr[0], wideStrLen);
+
+    int requiredLen = WideCharToMultiByte(CP_ACP, 0, wideStr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+    if (requiredLen == 0) {
+        return "";
+    }
+
+    std::string result(requiredLen, '\0');
+    WideCharToMultiByte(CP_ACP, 0, wideStr.c_str(), -1, &result[0], requiredLen, nullptr, nullptr);
+
+    return result;
+}
+
 void readMessage()
 {
     std::cout << "=============================================" << std::endl;
-    for (int i = 0; i < mes.size(); i++)
-    {
-        if (mes[i].getTo() == currentUser || mes[i].getTo() == "all" || mes[i].getFrom() == currentUser)
-        {
-            if (mes[i].getFrom() == currentUser)  std::cout << "You: -> " << mes[i].getMessage() << std::endl;
 
-            else std::cout << mes[i].getFrom() << ": " << mes[i].getMessage() << std::endl;
+    std::string message = "page=sendUsersMessageAll;user_id=" + std::to_string(pClientsLocal->id) + ";";
+    pClientsLocal->SMessage(message);
+
+    std::string resultBase64 = pClientsLocal->RMessage();
+    std::map<std::string, std::string> result = MessageManager::parseKeyValueString(resultBase64);
+    std::string results = base64_decode(result["all_message"]);
+
+    struct ListMessage { std::string type_message;  std::string nickname; std::string message; };
+    std::list<ListMessage> AllMessage;
+
+    std::istringstream iss(results);
+    std::string token;
+
+    std::vector<std::string> elements;
+
+    while (std::getline(iss, token, ';')) {
+        if (!token.empty()) {
+            elements.push_back(token);
         }
     }
+
+    std::vector<std::vector<std::string>> vresult;
+    // Разделение на массив из двух элементов по три подэлемента
+    for (size_t i = 0; i < elements.size(); i += 3) {
+        std::vector<std::string> sub_array;
+        for (size_t j = 0; j < 3 && i + j < elements.size(); ++j) {
+            sub_array.push_back(elements[i + j]);
+        }
+        vresult.push_back(sub_array);
+    }
+
+
+    // Вывод результата
+    for (const auto& sub_array : vresult) {
+
+
+        ListMessage message;
+        message.nickname = sub_array[1];
+        message.nickname.erase(std::remove(message.nickname.begin(), message.nickname.end(), ' '), message.nickname.end());;
+        
+        message.message = decodeUtf8(sub_array[2]);
+
+        message.type_message = sub_array[0];
+        AllMessage.push_back(message);
+    }
+
+    setlocale(LC_ALL, "Russian");
+
+    for (const ListMessage& msg : AllMessage) {
+
+        if (msg.nickname == pClientsLocal->nickname)
+            std::cout << msg.type_message << " " << "You: -> " << msg.message << std::endl;
+        else
+            std::cout << msg.type_message << " " << msg.nickname << ": " << msg.message << std::endl;
+    }
+
     std::cout << "=============================================" << std::endl;
     userMenu();
 }
 
 void writeMessage()
 {
-    std::fstream mes_file("messages.list", std::ios::out | std::ios::app);
+    /*std::fstream mes_file("messages.list", std::ios::out | std::ios::app);
     
     auto permissions = std::filesystem::perms::group_all |
 std::filesystem::perms::others_all;
@@ -217,17 +351,89 @@ std::filesystem::perm_options::remove);
     mes_file << "to:" << to << "\n";
     mes_file << "sms:" << sms << "\n";
     mes_file.close();
+    userMenu();*/
+
+    std::string to_message;
+    std::string message;
+
+    printf("\x1b[37m");
+    std::cout << "to whom(write 'all' for all): ";
+    std::cin >> to_message;
+    std::cin.ignore();
+
+    if (to_message == "all")
+    {
+        std::cout << "Send to All Users\n";
+        std::cout << "enter message: ";
+        getline(std::cin, message);
+    }
+    else
+    {
+        std::cout << "Send to " << to_message << std::endl;
+        std::cout << "enter message: ";
+        getline(std::cin, message);
+
+
+    }
+
+
+    std::cout << "Send " << to_message << " Message: " << message << std::endl;
+    std::string Message = "page=readUserMessage;to_message=" + to_message + ";message=" + message + ";";
+    pClientsLocal->SMessage(Message);
+
+    std::string result = pClientsLocal->RMessage();
+
+    if (MessageManager::parseKeyValueString(result)["status"] == "ok")
+    {
+        std::cout << "Message Sending\n";
+    }
+    else
+    {
+        std::string message = decodeUtf8(base64_decode(MessageManager::parseKeyValueString(result)["message"]));
+        std::cout << message << std::endl;
+        
+
+    }
+
     userMenu();
+
 }
 
 void showUsers()
 {
     printf("\x1b[36m");
     std::cout << "=============================================" << std::endl;
-    for (int i = 0; i < users.size(); i++)
-    {
-        std::cout << i + 1 << ". " << users[i].getName() << "\n";
+
+
+    std::string message = "page=usersAll;";
+    pClientsLocal->SMessage(message);
+
+    std::string result = pClientsLocal->RMessage();
+
+    std::string userBase64 = MessageManager::parseKeyValueString(result)["result"];
+    std::string users = base64_decode(userBase64);
+
+    // Удаление последнего символа ';'
+    if (!users.empty() && users.back() == ';') {
+        users.pop_back();
     }
+
+    std::vector<std::string> tokens;
+    std::istringstream tokenStream(users);
+    std::string token;
+
+    while (std::getline(tokenStream, token, ';')) {
+        tokens.push_back(token);
+    }
+
+    int count = 1;
+
+    for (const std::string& token : tokens) {
+        std::cout << count << ". " << token << std::endl;
+        count++;
+    }
+
+
     std::cout << "=============================================" << std::endl;
     userMenu();
 }

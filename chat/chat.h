@@ -16,10 +16,10 @@
 #endif
 
 
+class CSocket;
+void reg(CSocket* pClient);
 
-void reg();
-
-bool signUp();
+bool signUp(CSocket* pClient);
 
 void userMenu();
 
