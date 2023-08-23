@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="CoreServer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="mysql_driver.cpp">
+      <Filter>db</Filter>
+    </ClCompile>
+    <ClCompile Include="CServer.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>server</Filter>
+    </ClCompile>
+    <ClCompile Include="CVarSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{fc6363e6-6299-472a-9eda-b79ecbd1c425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="db">
+      <UniqueIdentifier>{85eff9e9-72d5-4837-b0d6-41d6cdfca77d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="server">
+      <UniqueIdentifier>{54aa12d3-367f-4653-925b-f4da7a178172}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CoreServer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="mysql_driver.h">
+      <Filter>db</Filter>
+    </ClInclude>
+    <ClInclude Include="CServer.h">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>server</Filter>
+    </ClInclude>
+    <ClInclude Include="CVarSystem.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
